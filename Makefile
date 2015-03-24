@@ -12,9 +12,9 @@ FTP_HOST=localhost
 FTP_USER=anonymous
 FTP_TARGET_DIR=/
 
-SSH_HOST=renaissancedev.com
+SSH_HOST=direct.boundlessnotions.com
 SSH_PORT=22
-SSH_USER=tmacey
+SSH_USER=root
 SSH_TARGET_DIR=/var/www
 
 S3_BUCKET=renaissancedev_blog
