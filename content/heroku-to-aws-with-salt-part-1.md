@@ -115,4 +115,4 @@ This translates to an API endpoint of `https://<salt_master_url>/api/hook/<targe
 
 Now, it is possible to have a git-based workflow similar to what my client had gotten used to with Heroku, with the additional benefit of being able to define specific actions that will trigger the webhook. This adds greater flexibility without any unnecessary additional complexity.
 
-In the next post of this series I will explain how I managed creation and scaling of the EC2 nodes with [salt-cloud](http://docs.saltstack.com/en/latest/topics/cloud/) and the reactor system.
+In the [next post](/from-heroku-to-aws-with-saltstack-part-2.html) I explain how I managed creation and scaling of the EC2 nodes with [salt-cloud](http://docs.saltstack.com/en/latest/topics/cloud/) and the reactor system.
