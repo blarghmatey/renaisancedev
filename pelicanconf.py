@@ -22,6 +22,7 @@ AUTHOR_FEED_RSS = None
 # Blogroll
 LINKS = (
     ('Boundless Notions', 'http://www.boundlessnotions.com'),
+    ('Podcast.__init__', 'http://www.podcastinit.com'),
 )
 
 # Social widget
@@ -38,4 +39,5 @@ THEME = 'themes/blueidea'
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['better_code_samples']
+PLUGINS = ['better_code_samples', 'sitemap', 'share_post']
+TWITTER_USERNAME="TobiasMacey"
