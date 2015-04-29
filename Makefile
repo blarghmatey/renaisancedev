@@ -15,7 +15,7 @@ FTP_TARGET_DIR=/
 SSH_HOST=direct.boundlessnotions.com
 SSH_PORT=22
 SSH_USER=root
-SSH_TARGET_DIR=/var/www
+SSH_TARGET_DIR=/var/www/renaissancedev
 
 S3_BUCKET=renaissancedev_blog
 
