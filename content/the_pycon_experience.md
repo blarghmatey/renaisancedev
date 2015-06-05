@@ -1,7 +1,7 @@
 Title: The PyCon Experience
 Date: 2015-04-14
 Category: General
-Tags: PyCon, Python, Community, Diversity, Ethics, Education
+Tags: PyCon, Python, Community, Diversity, Ethics, Education, Conference
 
 I attended PyCon for the first time this year and, while I cannot begin to do it full justice, I want to share a summary of my experience. Some of the main themes that I encountered were around community, diversity and social awareness, which are areas that Pythonistas are particularly sensitive to.
 
