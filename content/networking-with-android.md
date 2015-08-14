@@ -12,8 +12,7 @@ The application that I was working on relied entirely on an HTTP API for handlin
 The first method that I tried was to use the Android native [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html) which requires a lot of boilerplate to make it work. The benefit of this approach is that there are a large number of resources available online to explain how to use an `AsyncTask` in your application.
 
 In Retrofit, you can specify a return type in the method signature of a given endpoint which will make the method call synchronous. This means that if you attempt to call the endpoint on your main thread you will get a `NetworkOnMainThreadException` unless you explicitly set your application to allow this behavior (don't do it!). In order to make use of these synchronous calls it is necessary to wrap the execution in an `AsyncTask`. This ends up looking like:
-```
-#!java
+```java
 //Interface definition of method
 @GET("/resources")
 List<Resource> getResources();
@@ -44,8 +43,7 @@ The benefit of using an `AsyncTask` is that it is easy to reason about the order
 #Callbacks
 
 After realizing the pain points of handling `AsyncTasks` I finally understood why the `Callback` approach of Retrofit was so beneficial. Rather than having to litter your code with anonymous classes that extend `AsyncTask` you can now write a method that returns a callback object. Inside of the callback object, there are two methods to implement for handling success and failure cases. Rewriting our `AsyncTask` example looks like this:
-```
-#!java
+```java
 //Interface definition of method
 @GET("/resources")
 void getResources(Callback<List<Resource>> resourceCallback);
@@ -75,8 +73,7 @@ If you prefer, it is also possible to inline the definition of the callback with
 While the callback approach requires less boilerplate than `AsyncTask`, it is still somewhat verbose. Using RxAndroid with Retrofit makes the code more natural to read and understand, as well as providing a number of convenient APIs to more finely control the processing of response data. Another big benefit to using RxAndroid is that you can chain API calls together for cases where you only care about the response from one request as an input to the next one.
 
 Rewriting our example again, it now looks like this:
-```
-#!java
+```java
 //Interface definition of method
 @GET("/resources")
 Observable<List<Resource>> getResources();
@@ -89,8 +86,7 @@ retrofitClient.getResources().onError(
 );
 ```
 There are also a number of other useful things that you can do when calling the endpoint, such as retries or (as mentioned above) mapping together two network requests.
-```
-#!java
+```java
 //Calling the endpoint with retries
 retrofitClient.getResources().retry(5).subscribe();
 
@@ -113,8 +109,7 @@ One thing that bit me while working on this application is that if your `subscri
 
 #The Bug
 The API that I was connecting to for this application used OAuth for authentication of all requests. In order to handle expired tokens, I added this code as a `RequestInterceptor`:
-```
-#!java
+```java
 private RequestInterceptor bearerHeader = new RequestInterceptor() {
     @Override
     public void intercept(RequestFacade request) {
@@ -152,8 +147,7 @@ private RequestInterceptor bearerHeader = new RequestInterceptor() {
 };
 ```
 This worked great until I started refactoring the application to use observables. At one point during development, I had instances of all three approaches in use at different locations. In the end I changed everything to use RxAndroid, but before I got to that point I started having issues with certain API requests failing due to an invalid authentication token. Before introducing observables into the codebase I hadn't seen this bug, so I was baffled by why it started happening all of a sudden. After much frustration and confusion I finally realized that it was because of the fact that the failing request implemented an observable interface, whereas the token refresh used callbacks. The subscription on the observable was trying to process the response before the token had been retrieved. Classic race condition. In order to squash this particular bug I rewrote the request interceptor to use observables, like the rest of the application. What I ended up with looked like this:
-```
-#!java
+```java
 private RequestInterceptor bearerHeader = new RequestInterceptor() {
     @Override
     public void intercept(RequestFacade request) {
