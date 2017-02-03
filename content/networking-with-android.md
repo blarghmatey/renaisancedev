@@ -7,7 +7,7 @@ I wrote my first native Android application about 1 year ago. As part of that en
 
 The application that I was working on relied entirely on an HTTP API for handling state and data, so handling network requests properly was of paramount importance. I ended up using the fantastic [Retrofit](http://square.github.io/retrofit/) library from the excellent people at Square, which supports three different approaches to handling the data returned from each request. I ended up trying out all three of them over the course of building the application. At some points in the cycle of developing the app I actually had all three approaches in use at different locations, which caused a rather insidious bug that I will detail later.
 
-#AsyncTask
+# AsyncTask
 
 The first method that I tried was to use the Android native [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html) which requires a lot of boilerplate to make it work. The benefit of this approach is that there are a large number of resources available online to explain how to use an `AsyncTask` in your application.
 
@@ -40,7 +40,7 @@ This specifies an endpoint that will return a list of Resource objects and it wi
 
 The benefit of using an `AsyncTask` is that it is easy to reason about the order of operations for a given endpoint interaction. However, the code base quickly becomes cluttered with anonymous inner classes everywhere that you need to make a network request.
 
-#Callbacks
+# Callbacks
 
 After realizing the pain points of handling `AsyncTasks` I finally understood why the `Callback` approach of Retrofit was so beneficial. Rather than having to litter your code with anonymous classes that extend `AsyncTask` you can now write a method that returns a callback object. Inside of the callback object, there are two methods to implement for handling success and failure cases. Rewriting our `AsyncTask` example looks like this:
 ```java
@@ -69,7 +69,7 @@ retrofitClient.getResources(resourceCallback());
 ```
 If you prefer, it is also possible to inline the definition of the callback with the method call. With Java 8 lambdas, it gets even more concise. One of the big benefits to using callbacks instead of synchronous returns is that you can just write the logic for handling failure cases without having to do the failure determination on your own.
 
-#RxAndroid
+# RxAndroid
 While the callback approach requires less boilerplate than `AsyncTask`, it is still somewhat verbose. Using RxAndroid with Retrofit makes the code more natural to read and understand, as well as providing a number of convenient APIs to more finely control the processing of response data. Another big benefit to using RxAndroid is that you can chain API calls together for cases where you only care about the response from one request as an input to the next one.
 
 Rewriting our example again, it now looks like this:
@@ -107,7 +107,7 @@ I won't attempt to show even a fraction of what you can do with the RxJava API b
 
 One thing that bit me while working on this application is that if your `subscribe` function does any manipulation of the UI, you have to prefix it with `observeOn(AndroidSchedulers.mainThread())`. If you forget to do this, you will be scratching your head and pounding your desk, wondering why nothing is happening (I know because it happened to me several times).
 
-#The Bug
+# The Bug
 The API that I was connecting to for this application used OAuth for authentication of all requests. In order to handle expired tokens, I added this code as a `RequestInterceptor`:
 ```java
 private RequestInterceptor bearerHeader = new RequestInterceptor() {
@@ -176,5 +176,5 @@ private RequestInterceptor bearerHeader = new RequestInterceptor() {
 ```
 You can see here that observables (as well as Java 8 lambdas) can make your code shorter and easier to understand.
 
-#Conclusions
+# Conclusions
 There are (at least) three different approaches that can be used when working with Retrofit to perform network requests in you Android application. Of these options, I find that RxJava observables (using RxAndroid) are the most powerful, with callbacks as a close second. I also recommend that whatever method you decide to use, stick with it for everything in the application in order to avoid strange bugs from race conditions between the different implementations.

@@ -35,17 +35,16 @@ DEFAULT_PAGINATION = 10
 DEFAULT_CATEGORY = 'General'
 
 TYPOGRIFY = True
-THEME = 'themes/elegant'
+THEME = 'themes/blueidea'
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['better_code_samples', 'sitemap', 'share_post', 'extract_toc',
-           'tipue_search']
-MD_EXTENSIONS=['codehilite(css_class=highlight)', 'extra', 'headerid', 'toc']
-DIRECT_TEMPLATES = (('index', 'tags', 'categories', 'archives', 'search',
-                     '404'))
+PLUGINS = ['better_code_samples', 'sitemap', 'share_post', 'extract_toc']
+# MD_EXTENSIONS=['codehilite(css_class=highlight)', 'extra', 'headerid', 'toc']
+# DIRECT_TEMPLATES = (('index', 'tags', 'categories', 'archives', 'search',
+#                      '404'))
 TWITTER_USERNAME="TobiasMacey"
-TAG_SAVE_AS=''
-CATEGORY_SAVE_AS=''
-AUTHOR_SAVE_AS=''
-COMMENTS_INTRO=('All corrections, suggestions and feedback are welcome.')
+# TAG_SAVE_AS=''
+# CATEGORY_SAVE_AS=''
+# AUTHOR_SAVE_AS=''
+# COMMENTS_INTRO=('All corrections, suggestions and feedback are welcome.')
